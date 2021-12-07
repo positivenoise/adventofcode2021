@@ -22,13 +22,8 @@ counts = dict({0:0, 6:0, 7:0, 8:0})
 for i in fish:
   counts[i] = counts.get(i, 0) + 1
 
-
-print(counts)
-
 for x in range(0,256):
-
     fish = stimulate(counts)
-
 
 results = 0
 for i in counts:
