@@ -1,32 +1,37 @@
-import numpy as np
-
-
-
-def stimulate(fish):
-    new_fish = np.array([])
-    fish = fish - 1
-    n_zeros = np.count_nonzero(fish==0)
-    es = np.linspace(8,8,n_zeros)
-    ss = np.linspace(6,6,n_zeros)
-    new_fish = np.append(new_fish,es)
-    new_fish = np.append(new_fish,ss)
-    new_fish = np.append(new_fish,fish[fish != 0])
-
-    return new_fish
-
+def stimulate(counts):
+    ones = counts[0]
+    counts[0] = counts[1]
+    counts[1] = counts[2]
+    counts[2] = counts[3]
+    counts[3] = counts[4]
+    counts[4] = counts[5]
+    counts[5] = counts[6]
+    counts[6] = counts[7] + ones
+    counts[7] = counts[8] 
+    counts[8] = ones
+    print(counts)
 
 lines = open("data.txt").read().splitlines()
 
 fish = lines[0].split(",")
 
 fish = [int(x) for x in fish]
-fish_np = np.array(fish)
+
+counts = dict({0:0, 6:0, 7:0, 8:0})
+
+for i in fish:
+  counts[i] = counts.get(i, 0) + 1
 
 
+print(counts)
 
 for x in range(0,256):
-    print(f"day {x}")
-    print(len(fish_np))
-    fish_np = stimulate(fish_np)
 
-print(len(fish_np))
+    fish = stimulate(counts)
+
+
+results = 0
+for i in counts:
+    results += counts[i]
+
+print(results)
